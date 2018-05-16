@@ -1,0 +1,1 @@
+## Server for slack clone with node, express, and GraphQL.
