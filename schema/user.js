@@ -1,24 +1,32 @@
 export default `
-    type User {
-        id: Int!
-        username: String!
-        email: String!
-        messages: Message!
-        teams: [Team!]!
-    }
+  type User {
+    id: Int!
+    username: String!
+    email: String!
+    messages: Message!
+    teams: [Team!]!
+  }
 
-    type Query {
-        getUser(id: Int!): User!
-        allUsers(id: Int!): [User!]!
-    }
+  type Query {
+    getUser(id: Int!): User!
+    allUsers(id: Int!): [User!]!
+  }
 
-    type RegisterResponse {
-        ok: Boolean!
-        user: User
-        errors: [Error!]
-    }
+  type RegisterResponse {
+    ok: Boolean!
+    user: User
+    errors: [Error!]
+  }
 
-    type Mutation {
-        register(username: String!, email: String!, password: String!): RegisterResponse!
-    }
+  type LoginResponse {
+    ok: Boolean!
+    token: String
+    refreshToken: String
+    errors: [Error!]
+  }
+
+  type Mutation {
+    register(username: String!, email: String!, password: String!): RegisterResponse!  
+    login(email: String!, password: String!): LoginResponse!
+  }
 `;
