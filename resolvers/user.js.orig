@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+<<<<<<< HEAD
+=======
 import _ from 'lodash';
 
 const formatErrors = (e, models) => {
@@ -8,6 +10,7 @@ const formatErrors = (e, models) => {
 
   return [{ path: 'name', message: 'something went wrong' }];
 };
+>>>>>>> develop
 
 export default {
   Query: {
@@ -17,6 +20,13 @@ export default {
   Mutation: {
     register: async (parent, { password, ...otherArgs }, { models }) => {
       try {
+<<<<<<< HEAD
+        const hashedPassword = await bcrypt.hash(password, 12);
+        await models.User.create({ ...otherArgs, password: hashedPassword });
+        return true;
+      } catch (err) {
+        return false;
+=======
         if (password.length < 6) {
           return {
             ok: false,
@@ -34,6 +44,7 @@ export default {
           ok: false,
           errors: formatErrors(err, models),
         };
+>>>>>>> develop
       }
     },
   },
