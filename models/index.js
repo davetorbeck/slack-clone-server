@@ -1,4 +1,4 @@
-import Sequelize, { Op } from 'sequelize';
+import Sequelize, { Op } from 'sequelize'
 
 const sequelize = new Sequelize('slack', 'postgres', 'postgres', {
   dialect: 'postgres',
@@ -6,22 +6,22 @@ const sequelize = new Sequelize('slack', 'postgres', 'postgres', {
   define: {
     underscored: true,
   },
-});
+})
 
 const models = {
   User: sequelize.import('./user'),
   Channel: sequelize.import('./channel'),
   Message: sequelize.import('./message'),
   Team: sequelize.import('./team'),
-};
+}
 
 Object.keys(models).forEach((modelName) => {
   if ('associate' in models[modelName]) {
-    models[modelName].associate(models);
+    models[modelName].associate(models)
   }
-});
+})
 
-models.sequelize = sequelize;
-models.Sequelize = Sequelize;
+models.sequelize = sequelize
+models.Sequelize = Sequelize
 
-export default models;
+export default models
