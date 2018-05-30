@@ -3,13 +3,12 @@ export default `
     id: Int!
     username: String!
     email: String!
-    messages: Message!
     teams: [Team!]!
   }
 
   type Query {
     getUser(id: Int!): User!
-    allUsers(id: Int!): [User!]!
+    allUsers: [User!]!
   }
 
   type RegisterResponse {
@@ -29,4 +28,4 @@ export default `
     register(username: String!, email: String!, password: String!): RegisterResponse!  
     login(email: String!, password: String!): LoginResponse!
   }
-`;
+`
