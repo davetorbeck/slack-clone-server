@@ -2,15 +2,16 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { makeExecutableSchema } from 'graphql-tools'
-import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
 import path from 'path'
+import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
-import { refreshTokens } from './auth'
-import models from './models'
 
-const SECRET = 'dhbfgjksdhnfjkndsajkf1231232dfdsfsdf'
-const SECRET2 = 'lkdsnflksdnflksdnfklsdjnflksdnklf'
+import models from './models'
+import { refreshTokens } from './auth'
+
+const SECRET = 'asiodfhoi1hoi23jnl1kejd'
+const SECRET2 = 'asiodfhoi1hoi23jnl1kejasdjlkfasdd'
 
 const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schema')))
 
@@ -22,7 +23,6 @@ const schema = makeExecutableSchema({
 })
 
 const app = express()
-const graphqlEndpoint = '/graphql'
 
 app.use(cors('*'))
 
@@ -35,23 +35,26 @@ const addUser = async (req, res, next) => {
     } catch (err) {
       const refreshToken = req.headers['x-refresh-token']
       const newTokens = await refreshTokens(token, refreshToken, models, SECRET, SECRET2)
-
       if (newTokens.token && newTokens.refreshToken) {
         res.set('Access-Control-Expose-Headers', 'x-token, x-refresh-token')
-        res.set('x-token', newToken.token)
+        res.set('x-token', newTokens.token)
         res.set('x-refresh-token', newTokens.refreshToken)
       }
+      req.user = newTokens.user
     }
   }
+  next()
 }
 
 app.use(addUser)
+
+const graphqlEndpoint = '/graphql'
 
 app.use(
   graphqlEndpoint,
   bodyParser.json(),
   graphqlExpress((req) => ({
-    schema: schema,
+    schema,
     context: {
       models,
       user: req.user,
@@ -63,6 +66,6 @@ app.use(
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: graphqlEndpoint }))
 
-models.sequelize.sync().then(() => {
+models.sequelize.sync({}).then(() => {
   app.listen(8081)
 })
