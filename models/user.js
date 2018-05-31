@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt'
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
         validate: {
           isAlphanumeric: {
             args: true,
-            msg: 'The username can onlyt contain letters and numbers',
+            msg: 'The username can only contain letters and numbers',
           },
           len: {
             args: [3, 25],
@@ -32,8 +32,8 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           len: {
-            args: [6],
-            msg: 'The password needs to be at least 6 characters',
+            args: [5, 100],
+            msg: 'The password needs to be between 5 and 100 characters long',
           },
         },
       },
@@ -41,25 +41,31 @@ export default (sequelize, DataTypes) => {
     {
       hooks: {
         afterValidate: async (user) => {
-          const hashedPassword = await bcrypt.hash(user.password, 12);
+          const hashedPassword = await bcrypt.hash(user.password, 12)
           // eslint-disable-next-line no-param-reassign
-          user.password = hashedPassword;
+          user.password = hashedPassword
         },
       },
     }
-  );
+  )
 
   User.associate = (models) => {
     User.belongsToMany(models.Team, {
       through: 'member',
-      foreignKey: 'user_id',
-    });
-
+      foreignKey: {
+        name: 'userId',
+        field: 'user_id',
+      },
+    })
+    // N:M
     User.belongsToMany(models.Channel, {
       through: 'channel_member',
-      foreignKey: 'user_id',
-    });
-  };
+      foreignKey: {
+        name: 'userId',
+        field: 'user_id',
+      },
+    })
+  }
 
-  return User;
-};
+  return User
+}

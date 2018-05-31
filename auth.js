@@ -2,12 +2,12 @@ import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 import bcrypt from 'bcrypt'
 
-export const createTokens = async (user, secret, secret2) => {
+export const createTokens = async (user, SECRET, SECRET2) => {
   const createToken = jwt.sign(
     {
       user: _.pick(user, ['id', 'username']),
     },
-    secret,
+    SECRET,
     {
       expiresIn: '1h',
     }
@@ -17,7 +17,7 @@ export const createTokens = async (user, secret, secret2) => {
     {
       user: _.pick(user, 'id'),
     },
-    secret2,
+    SECRET2,
     {
       expiresIn: '7d',
     }
@@ -26,7 +26,7 @@ export const createTokens = async (user, secret, secret2) => {
   return [createToken, createRefreshToken]
 }
 
-export const refreshTokens = async (token, refreshToken, models, SECRET) => {
+export const refreshTokens = async (token, refreshToken, models, SECRET, SECRET2) => {
   let userId = 0
 
   try {

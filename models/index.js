@@ -1,8 +1,8 @@
-import Sequelize, { Op } from 'sequelize'
+import Sequelize from 'sequelize'
 
 const sequelize = new Sequelize('slack', 'postgres', 'postgres', {
   dialect: 'postgres',
-  operatorsAliases: Op,
+  operatorsAliases: Sequelize.Op,
   define: {
     underscored: true,
   },
