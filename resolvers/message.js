@@ -5,11 +5,11 @@ export default {
         await models.Message.create({
           ...args,
           userId: user.id,
-        });
+        })
       } catch (error) {
-        console.log(error);
-        return false;
+        console.log(error)
+        return false
       }
     },
   },
-};
+}
