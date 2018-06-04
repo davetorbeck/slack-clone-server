@@ -2,19 +2,20 @@ export default `
     type Team {
         id: Int!
         name: String!
-        owner: User!
+        owner: Int!
         members: [User!]!
         channels: [Channel!]!
     }
 
     type CreateTeamResponse {
         ok: Boolean!
-        team: Team!
+        team: Team
         errors: [Error!]
     }
 
     type Query {
         allTeams: [Team!]!
+        inviteTeams: [Team!]!
     }
 
     type VoidResponse {
