@@ -77,7 +77,7 @@ app.use(
 
 const server = createServer(app)
 
-models.sequelize.sync({}).then(() => {
+models.sequelize.sync().then(() => {
   server.listen(8081, () => {
     // eslint-disable-next-line no-new
     new SubscriptionServer(
@@ -87,29 +87,16 @@ models.sequelize.sync({}).then(() => {
         schema,
         onConnect: async ({ token, refreshToken }, webSocket) => {
           if (token && refreshToken) {
-            let user = null
             try {
-              const payload = jwt.verify(token, SECRET)
-              user = payload.user
+              const { user } = jwt.verify(token, SECRET)
+              return { models, user }
             } catch (err) {
               const newTokens = await refreshTokens(token, refreshToken, models, SECRET, SECRET2)
-              user = newTokens.user
+              return { models, user: newTokens.user }
             }
-
-            if (!user) {
-              throw new Error('Invalid auth tokens')
-            }
-
-            const member = await models.Member.findOne({ where: { teamId: 1, userId: user.id } })
-
-            if (!member) {
-              throw new Error('Missing auth tokens!')
-            }
-
-            return true
           }
 
-          throw new Error('Missing auth tokens!')
+          return { models }
         },
       },
       {
