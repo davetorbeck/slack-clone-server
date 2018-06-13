@@ -9,7 +9,7 @@ module.exports = {
   },
   rules: {
     'object-curly-spacing': 0,
-    'max-len': [1, { code: 120 }],
-    'semi': 0,
+    'max-len': [1, { code: 100 }],
+    semi: 0,
   },
-};
+}
