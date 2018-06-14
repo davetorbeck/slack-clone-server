@@ -4,7 +4,7 @@ const NEW_CHANNEL_MESSAGE = 'NEW_CHANNEL_MESSAGE'
 
 export default {
   DirectMessage: {
-    user: ({ sender, senderId }, args, { models }) => {
+    sender: ({ sender, senderId }, args, { models }) => {
       if (sender) {
         return sender
       }
