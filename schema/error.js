@@ -3,4 +3,4 @@ export default `
     path: String!
     message: String
   }
-`
+`;

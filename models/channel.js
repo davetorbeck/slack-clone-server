@@ -5,7 +5,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-  })
+  });
 
   Channel.associate = (models) => {
     // 1:M
@@ -14,7 +14,7 @@ export default (sequelize, DataTypes) => {
         name: 'teamId',
         field: 'team_id',
       },
-    })
+    });
     // N:M
     Channel.belongsToMany(models.User, {
       through: 'channel_member',
@@ -22,8 +22,8 @@ export default (sequelize, DataTypes) => {
         name: 'channelId',
         field: 'channel_id',
       },
-    })
-  }
+    });
+  };
 
-  return Channel
-}
+  return Channel;
+};

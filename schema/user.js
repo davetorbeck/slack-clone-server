@@ -1,4 +1,11 @@
+// CRUD
+// Create
+// Read
+// Update
+// Delete
+
 export default `
+
   type User {
     id: Int!
     username: String!
@@ -25,7 +32,8 @@ export default `
   }
 
   type Mutation {
-    register(username: String!, email: String!, password: String!): RegisterResponse!  
+    register(username: String!, email: String!, password: String!): RegisterResponse!
     login(email: String!, password: String!): LoginResponse!
   }
-`
+
+`;

@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -41,13 +41,13 @@ export default (sequelize, DataTypes) => {
     {
       hooks: {
         afterValidate: async (user) => {
-          const hashedPassword = await bcrypt.hash(user.password, 12)
+          const hashedPassword = await bcrypt.hash(user.password, 12);
           // eslint-disable-next-line no-param-reassign
-          user.password = hashedPassword
+          user.password = hashedPassword;
         },
       },
-    }
-  )
+    },
+  );
 
   User.associate = (models) => {
     User.belongsToMany(models.Team, {
@@ -56,7 +56,7 @@ export default (sequelize, DataTypes) => {
         name: 'userId',
         field: 'user_id',
       },
-    })
+    });
     // N:M
     User.belongsToMany(models.Channel, {
       through: 'channel_member',
@@ -64,8 +64,8 @@ export default (sequelize, DataTypes) => {
         name: 'userId',
         field: 'user_id',
       },
-    })
-  }
+    });
+  };
 
-  return User
-}
+  return User;
+};

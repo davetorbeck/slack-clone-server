@@ -1,4 +1,5 @@
 export default `
+
   type DirectMessage {
     id: Int!
     text: String!
@@ -8,10 +9,11 @@ export default `
   }
 
   type Query {
-    directMessages(teamId: Int!, otherUser: Int!): [DirectMessage!]!
+    directMessages(teamId: Int!, otherUserId: Int!): [DirectMessage!]!
   }
 
   type Mutation {
-    createDirectMessage(receiverId: Int!, text: String!): Boolean!
+    createDirectMessage(receiverId: Int!, text: String!, teamId: Int!): Boolean!
   }
-`
+
+`;

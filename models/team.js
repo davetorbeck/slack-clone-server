@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
     },
-  })
+  });
 
   Team.associate = (models) => {
     Team.belongsToMany(models.User, {
@@ -13,8 +13,8 @@ export default (sequelize, DataTypes) => {
         name: 'teamId',
         field: 'team_id',
       },
-    })
-  }
+    });
+  };
 
-  return Team
-}
+  return Team;
+};
