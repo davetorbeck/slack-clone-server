@@ -3,13 +3,12 @@ import requiresAuth from '../permissions'
 
 export default {
   Mutation: {
-    createChannel: requiresAuth.createResolver(async (parent, args, { models }) => {
+    createChannel: requiresAuth.createResolver(async (parent, args, { models, user }) => {
       try {
         const member = await models.Member.findOne(
           { where: { teamId: args.teamId, userId: user.id } },
           { raw: true }
         )
-
         if (!member.admin) {
           return {
             ok: false,
@@ -27,10 +26,11 @@ export default {
           ok: true,
           channel,
         }
-      } catch (error) {
+      } catch (err) {
+        console.log(err)
         return {
           ok: false,
-          errors: formatErrors(error, models),
+          errors: formatErrors(err, models),
         }
       }
     }),
