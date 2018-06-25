@@ -23,6 +23,7 @@ export default {
       ),
   },
   Query: {
+    getUser: (parent, { userId }, { models }) => models.User.findOne({ where: { id: userId } }),
     me: requiresAuth.createResolver((parent, { id }, { models, user }) =>
       models.User.findOne({ where: { id: user.id } })
     ),
