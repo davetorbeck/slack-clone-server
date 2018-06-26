@@ -1,4 +1,5 @@
-import { PubSub, withFilter } from 'graphql-subscriptions'
+import { withFilter } from 'graphql-subscriptions'
+import PubSub from '../pubsub'
 
 import requiresAuth, { requiresTeamAccess } from '../permissions'
 
