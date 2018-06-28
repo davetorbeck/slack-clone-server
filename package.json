@@ -5,17 +5,21 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
-    "lint": "eslint . --ignore-pattern node_modules/ || true"
+    "lint": "eslint . --ignore-pattern node_modules/ || true",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
+    "babel-jest": "^23.2.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-3": "^6.24.1",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
+    "jest": "^23.2.0",
     "lodash": "^4.17.10",
     "nodemon": "^1.17.3"
   },
